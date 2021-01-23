@@ -1,7 +1,7 @@
 # STM-LED
  Led blinking program for STM32 Discovery Board
  
-#Tips for running
+*Tips for running*
 
  -1. Download STMCubeIDE https://www.st.com/en/development-tools/stm32cubeide.html
  
