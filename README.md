@@ -11,3 +11,5 @@
  -3. Make sure STM32F0 board is connected through USB
  
  -4. Press play button to flash the program onto your STM32F0 board :)
+ 
+ https://www.youtube.com/watch?v=B1WCa9NOeTM
