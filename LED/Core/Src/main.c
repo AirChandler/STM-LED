@@ -60,13 +60,13 @@ void ledControl(){
 	//Convert to unsigned byte (01010101 et al.)
 	//map each bit to LED PIN - BUS 16 BIT
 	GPIOC->BSRR = count << 8;
-	HAL_Delay(2000);
+	HAL_Delay(500);
 	count++;
 	if(count == 255){
 		count = 1;
 	}
-	GPIOC->BRR = count << 8;
-	HAL_Delay(2000);
+	//Reset state of pins
+	GPIOC->ODR = 0b0000000000000000;
 }
 
 /**
