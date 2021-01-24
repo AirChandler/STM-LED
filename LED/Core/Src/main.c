@@ -24,7 +24,7 @@ void ledControl();
 GPIO_InitTypeDef led;
 GPIO_PinState ledState;
 int ledArray[] = {15, 14, 13, 12, 11, 10, 9, 8};
-uint16_t count;
+uint32_t count;
 
 /**
   * @brief  The application entry point.
@@ -60,8 +60,13 @@ void ledControl(){
 	//Convert to unsigned byte (01010101 et al.)
 	//map each bit to LED PIN - BUS 16 BIT
 	GPIOC->BSRR = count << 8;
-	HAL_Delay(500);
+	HAL_Delay(2000);
 	count++;
+	if(count == 255){
+		count = 1;
+	}
+	GPIOC->BRR = count << 8;
+	HAL_Delay(2000);
 }
 
 /**
