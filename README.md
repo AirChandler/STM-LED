@@ -1,6 +1,6 @@
 # STM-LED
- Led blinking program for STM32 Discovery Board
- 
+ Led binary counting program for STM32 Discovery Board
+  -performs operation over 8 leds on upper 8bit of 16bit wide GPIOC port bus
 *Tips for running*
 
  -1. Download STMCubeIDE https://www.st.com/en/development-tools/stm32cubeide.html
