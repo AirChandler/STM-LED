@@ -19,6 +19,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+void ledControl(GPIO_PinState ledState);
 
 /**
   * @brief  The application entry point.
@@ -36,17 +37,25 @@ int main(void)
   //LED Program
   GPIO_InitTypeDef led;
   /*Configure GPIO pins : ON C PINS */
-  led.Pin = GPIO_PIN_15; //PC15 PIN
+  led.Pin = GPIO_PIN_All; //PC15 PIN
   led.Mode = GPIO_MODE_OUTPUT_PP;
   led.Pull = GPIO_NOPULL;
   led.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &led);
-
+  GPIO_PinState ledState;
   while (1)
   {
-	  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_15);
-	  HAL_Delay(1000);
+	  ledControl(ledState);
   }
+}
+
+void ledControl(GPIO_PinState ledState){
+	ledState = GPIO_PIN_SET;
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_All, ledState);
+	HAL_Delay(500);
+	ledState = GPIO_PIN_RESET;
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_All, ledState);
+	HAL_Delay(500);
 }
 
 /**
