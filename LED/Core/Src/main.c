@@ -19,7 +19,12 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-void ledControl(GPIO_PinState ledState);
+void ledControl();
+
+GPIO_InitTypeDef led;
+GPIO_PinState ledState;
+int ledArray[] = {15, 14, 13, 12, 11, 10, 9, 8};
+uint16_t count;
 
 /**
   * @brief  The application entry point.
@@ -35,27 +40,28 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   //LED Program
-  GPIO_InitTypeDef led;
   /*Configure GPIO pins : ON C PINS */
   led.Pin = GPIO_PIN_All; //PC15 PIN
   led.Mode = GPIO_MODE_OUTPUT_PP;
   led.Pull = GPIO_NOPULL;
   led.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &led);
-  GPIO_PinState ledState;
+  count = 1;
   while (1)
   {
-	  ledControl(ledState);
+	  ledControl();
   }
 }
 
-void ledControl(GPIO_PinState ledState){
-	ledState = GPIO_PIN_SET;
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_All, ledState);
+void ledControl(){
+	//Binary Count (8 bit)
+	//Steps-
+	//Iterate 1-254
+	//Convert to unsigned byte (01010101 et al.)
+	//map each bit to LED PIN - BUS 16 BIT
+	GPIOC->BSRR = count << 8;
 	HAL_Delay(500);
-	ledState = GPIO_PIN_RESET;
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_All, ledState);
-	HAL_Delay(500);
+	count++;
 }
 
 /**
